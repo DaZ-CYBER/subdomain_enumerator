@@ -5,21 +5,28 @@ import requests
 import argparse
 
 def subdomain_enum(wordlist, domain):
+    # Assigning variables
     print("Wordlist: " + wordlist)
     print("Domain: " + domain)
+
+    # Opening wordlist and creating array values separated by newlines
     list = open(wordlist).read()
     subdomains = list.splitlines()
 
     for sub in subdomains:
-
+        # Creating subdomain query
         sub_d = f"http://{sub}.{domain}"
+        # Creating subdomain-only string for verbose output
         sub_d_nc = sub_d.lstrip("http://")
 
+        # Attempting subdomain connection with query
         try:
-            # print(f"Trying: {sub_d_nc}") - If you'd like to see verbose output
+            # print(f"Trying: {sub_d_nc}") - Example for f you'd like to see verbose output
             requests.get(sub_d)
+        # If connection fails, do not produce output
         except requests.ConnectionError:
             pass
+        # If subdomain exists, print it out to the command line
         else:
             print(f"+++ {sub_d} +++")
 
@@ -35,15 +42,17 @@ def argument_parser():
     return(config)
 
 def main():
-    # Initializing argument parser()
+    # Initializing argument parser
     config = argument_parser()
 
+    # Separating key-value pairs in config dictionary for organization
     for k, v in config.items():
         if(k == 'wordlist'):
             wordlist = v
         elif(k == 'domain'):
             domain = v
 
+    # Initializing subdomain enum function
     subdomain_enum(wordlist, domain)
 
 main()
