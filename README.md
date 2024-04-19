@@ -1,4 +1,4 @@
-# subdomain_enumerator-
+# subdomain_enumerator
 
 This is a subdomain enumerator that I made to practice my Python skills for pen testing.
 
